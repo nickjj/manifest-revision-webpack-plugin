@@ -1,0 +1,13 @@
+# OS and editor files
+.DS_Store
+*/**.DS_Store
+._*
+.*.sw*
+*~
+.idea/
+*.tmproj
+*.tmproject
+tmtags
+
+# Project related files
+node_modules

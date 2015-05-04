@@ -1,0 +1,25 @@
+{
+  "name": "manifest-revision-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Create a slimmed down manifest of your chunks and assets so that you can cache all of your assets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickjj/manifest-revision-webpack-plugin"
+  },
+  "keywords": [
+    "webpack",
+    "stats",
+    "manifest",
+    "revision"
+  ],
+  "author": "Nick Janetakis <nick.janetakis@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickjj/manifest-revision-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/nickjj/manifest-revision-webpack-plugin"
+}

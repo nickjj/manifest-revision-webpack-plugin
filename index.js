@@ -6,11 +6,11 @@ var path = require('path');
  * that you would be interested in when creating an asset manifest.
 
  * @param {string} output - The output file path.
- * @param {string} rootAssetPath - The root path of where your assets are.
+ * @param {object} options - Options to configure this plugin.
  */
-var ManifestRevisionPlugin = function (output, rootAssetPath) {
+var ManifestRevisionPlugin = function (output, options) {
     this.output = output;
-    this.rootAssetPath = rootAssetPath;
+    this.options = options;
 };
 
 /**
@@ -41,6 +41,7 @@ ManifestRevisionPlugin.prototype.mapAsset = function (logicalAssetPath, cachedAs
  */
 ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
     var assets = {};
+    var rootAssetPath = this.options.rootAssetPath || './';
 
     for (var i = 0, length = data.length; i < length; i++) {
         var item = data[i];

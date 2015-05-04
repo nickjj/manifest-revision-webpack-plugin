@@ -57,6 +57,7 @@ module.exports = {
 ## API
 
 `rootAssetPath` defines where it should start looking for assets.
+`ignorePaths` is an array of paths to ignore.
 
 ## How would I use the manifest file?
 

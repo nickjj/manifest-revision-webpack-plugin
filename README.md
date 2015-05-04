@@ -40,50 +40,17 @@ Well, now you can. Here's what it includes:
 ```js
 var ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 
-// This is where we want the manifest.json file to be created.
-var manifestPath = path.join('build', 'manifest.json');
-
 // Where are your assets located in your project? This would typically be a path
 // that contains folders such as: images, stylesheets and javascript.
 var rootAssetPath = './src/client';
 
-plugins = [
-  // Insert all of your plugins here...
-
-  new ManifestPlugin(manifestPath), {
-      rootAssetPath: rootAssetPath
-  })
-];
-
-
-/**
- *------------------------------------------------------------------------------
- * In order to get webpack to recognize our individual assets we need to tell
- * it where to look. I would really like to incorporate this into the plugin
- * itself but I don't know how yet.
- *------------------------------------------------------------------------------
- */
-var walk = require('walk');
-var walker_options;
-
-walker_options = {
-  listeners: {
-      file: function (root, fileStat, next) {
-          // We want to ignore the /stylesheets and /javascript dirs.
-          // You will probably want to modify this for your own setup.
-          if (root.indexOf('/stylesheets') === -1 && root.indexOf('/javascript') === -1) {
-              plugins.push(new webpack.PrefetchPlugin('./' + path.join(root, fileStat.name)));
-          }
-
-          next();
-      }
-  }
-};
-walk.walkSync(rootAssetPath, walker_options);
-// -----------------------------------------------------------------------------
-
 module.exports = {
-  plugins: plugins
+  plugins: [
+    new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
+        rootAssetPath: rootAssetPath,
+        ignorePaths: ['/stylesheets', '/javascript']
+    })
+  ]
 };
 ```
 

@@ -1,6 +1,9 @@
 var fs = require('fs');
 var path = require('path');
 
+var webpack = require('webpack');
+var walk = require('walk');
+
 /**
  * Produce a much slimmer version of webpack stats containing only information
  * that you would be interested in when creating an asset manifest.
@@ -11,6 +14,10 @@ var path = require('path');
 var ManifestRevisionPlugin = function (output, options) {
     this.output = output;
     this.options = options;
+
+    // Set sane defaults for any options.
+    this.options.rootAssetPath = options.rootAssetPath || './';
+    this.options.ignorePaths = options.ignorePaths || [];
 };
 
 /**
@@ -41,7 +48,6 @@ ManifestRevisionPlugin.prototype.mapAsset = function (logicalAssetPath, cachedAs
  */
 ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
     var assets = {};
-    var rootAssetPath = this.options.rootAssetPath || './';
 
     for (var i = 0, length = data.length; i < length; i++) {
         var item = data[i];
@@ -54,7 +60,8 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
             item.hasOwnProperty('assets') &&
             item.assets.length == 1) {
 
-            var nameWithoutRoot = item.name.replace(rootAssetPath, '');
+            var nameWithoutRoot = item.name.replace(this.options.rootAssetPath,
+                                                    '');
             var mappedAsset = this.mapAsset(nameWithoutRoot, item.assets[0]);
 
             assets[mappedAsset[0]] = mappedAsset[1];
@@ -62,6 +69,56 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
     }
 
     return assets;
+};
+
+/**
+ * Is this asset safe to be added?
+
+ * @param {string} path - The path being checked.
+ * @returns {boolean}
+ */
+ManifestRevisionPlugin.prototype.isSafeToTrack = function (path) {
+    var safeResults = [];
+
+    for (var i = 0, length = this.options.ignorePaths.length; i < length; i++) {
+        if (path.indexOf(this.options.ignorePaths[i]) === -1) {
+            safeResults.push(true);
+        } else {
+            safeResults.push(false);
+        }
+    }
+
+    // Make sure we have no false entries because we need all trues for it to be
+    // considered safe.
+    return safeResults.indexOf(false) === -1;
+};
+
+/**
+ * Walk the assets and optionally filter any unwanted sub-paths. This applies
+ * the PrefetchPlugin plugin to each asset that's not ignored. This makes it
+ * available to webpack.
+
+ * @param {object} compiler - The webpack compiler.
+ * @returns {null}
+ */
+ManifestRevisionPlugin.prototype.walkAndPrefetchAssets = function (compiler) {
+    var self = this;
+
+    var walker_options = {
+        listeners: {
+            file: function (root, fileStat, next) {
+                // root.indexOf('/styles') === -1 && root.indexOf('/scripts') === -1
+                if (self.isSafeToTrack(root)) {
+                    var assetPath = './' + path.join(root, fileStat.name);
+                    compiler.apply(new webpack.PrefetchPlugin(assetPath));
+                }
+
+                next();
+            }
+        }
+    };
+
+    walk.walkSync(this.options.rootAssetPath, walker_options);
 };
 
 ManifestRevisionPlugin.prototype.apply = function (compiler) {
@@ -79,6 +136,8 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
     options.source = false;
     options.errorDetails = false;
     options.chunkOrigins = false;
+
+    self.walkAndPrefetchAssets(compiler);
 
     compiler.plugin('done', function (stats) {
         var importantStats = {};

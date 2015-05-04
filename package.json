@@ -21,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/nickjj/manifest-revision-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/nickjj/manifest-revision-webpack-plugin"
+  "homepage": "https://github.com/nickjj/manifest-revision-webpack-plugin",
+  "dependencies": {
+    "walk": "^2.3.9"
+  },
+  "peerDependencies": {
+    "webpack": "^1.8.11"
+  }
 }

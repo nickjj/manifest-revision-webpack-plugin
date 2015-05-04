@@ -28,7 +28,7 @@ Well, now you can. Here's what it includes:
 
 - Assets include their logical paths for easy lookups on your server
 - You only have to keep track of your asset server in 1 place (your webpack config)
-- It's as small as possible and provides just enough info to do it's intended to do
+- It's as small as possible and provides just enough info to do what it's intended to do
 
 ## Installation
 

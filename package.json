@@ -1,6 +1,6 @@
 {
   "name": "manifest-revision-webpack-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create a slimmed down manifest of your chunks and assets so that you can cache all of your assets.",
   "main": "index.js",
   "scripts": {

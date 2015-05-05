@@ -30,10 +30,11 @@ var ManifestRevisionPlugin = function (output, options) {
  * @returns {Array}
  */
 ManifestRevisionPlugin.prototype.mapAsset = function (logicalAssetPath, cachedAsset) {
-    var logicalPath = logicalAssetPath.substring(0,
-        logicalAssetPath.lastIndexOf('/'));
+    if (logicalAssetPath.charAt(0) === '/') {
+        logicalAssetPath = logicalAssetPath.substr(1);
+    }
 
-    return [logicalAssetPath, path.join(logicalPath, cachedAsset)];
+    return [logicalAssetPath, cachedAsset];
 };
 
 /**

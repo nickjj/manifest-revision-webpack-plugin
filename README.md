@@ -45,6 +45,16 @@ var ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 var rootAssetPath = './src/client';
 
 module.exports = {
+  module: {
+    loaders: [
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+            'file?context=' + rootAssetPath + '&name=[path][name].[hash].[ext]'
+        ]
+      }
+    ]
+  },
   plugins: [
     new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
         rootAssetPath: rootAssetPath,

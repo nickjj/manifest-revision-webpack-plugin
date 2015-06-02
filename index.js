@@ -4,6 +4,8 @@ var path = require('path');
 var webpack = require('webpack');
 var walk = require('walk');
 
+var Format = require('./format');
+
 /**
  * Produce a much slimmer version of webpack stats containing only information
  * that you would be interested in when creating an asset manifest.
@@ -18,6 +20,7 @@ var ManifestRevisionPlugin = function (output, options) {
     // Set sane defaults for any options.
     this.options.rootAssetPath = options.rootAssetPath || './';
     this.options.ignorePaths = options.ignorePaths || [];
+    this.options.format = options.format || 'general';
 };
 
 /**
@@ -140,14 +143,13 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
     self.walkAndPrefetchAssets(compiler);
 
     compiler.plugin('done', function (stats) {
-        var importantStats = {};
         var data = stats.toJson(options);
+        var parsedAssets = self.parsedAssets(data.modules);
 
-        importantStats.publicPath = data.publicPath;
-        importantStats.assetsByChunkName = data.assetsByChunkName;
-        importantStats.assets = self.parsedAssets(data.modules);
+        var format = new Format(data, parsedAssets);
+        var outputData = format[self.options.format]();
 
-        fs.writeFileSync(output, JSON.stringify(importantStats));
+        fs.writeFileSync(output, JSON.stringify(outputData));
     });
 };
 

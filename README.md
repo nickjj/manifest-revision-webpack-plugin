@@ -33,6 +33,9 @@ That's what this plugin does. For example, here's a manifest file that it output
 What if you could easily format the output of the above file so it worked with
 existing frameworks such as Ruby on Rails? Sure, no problem buddy.
 
+What if you want a custom output format that's not included? Again, no problem.
+Just pass in a function as the format option and it will get used. This is
+explained in more detail below in the API section.
 
 #### Here's what's included
 
@@ -80,8 +83,45 @@ module.exports = {
 - `rootAssetPath` defines where it should start looking for assets.
 - `ignorePaths` is an array of paths to ignore.
 - `format` allows you to pick the manifest output file format.
-  - Currently supports `general` (default) and `rails`.
-  - Want to create your own format? [Submit a pull request](https://github.com/nickjj/manifest-revision-webpack-plugin/blob/master/format.js).
+  - Currently supports `general` (default), `rails` or passing in a function.
+
+If you want to use a custom function it could look like this:
+
+```js
+    // It must take 2 arguments. The first argument is the raw stats provided by
+    // Webpack. The second argument is an object list of each asset.
+    var myCoolFormatter = function (data, parsedAssets) {
+        console.log(data);
+        console.log('---');
+        console.log(parsedAssets);
+
+        // In this case we're returning an empty result.
+        return {};
+    };
+
+    new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
+        rootAssetPath: rootAssetPath,
+        ignorePaths: ['/stylesheets', '/javascript'],
+        format: myCoolFormatter,
+    })
+```
+
+### Is your custom formatter used in a popular framework?
+
+Great, I would be more than happy to include it in this project. Just send a
+pull request. Here's the rules for submitting an official formatter:
+
+- It must have a unit test
+- It must be well documented  (follow the other formatter examples)
+
+You would end up modifying the following files:
+
+- [format.js](https://github.com/nickjj/manifest-revision-webpack-plugin/blob/master/format.js)
+  - The formatter's location
+- [formatTest.js](https://github.com/nickjj/manifest-revision-webpack-plugin/blob/master/tests/formatTest.js)
+  - Your unit test
+- [README.md](https://github.com/nickjj/manifest-revision-webpack-plugin/blob/master/README.md)
+  - Update the `format` API documentation
 
 ## How would I use the manifest file?
 

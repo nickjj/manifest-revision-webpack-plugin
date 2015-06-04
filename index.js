@@ -145,9 +145,16 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
     compiler.plugin('done', function (stats) {
         var data = stats.toJson(options);
         var parsedAssets = self.parsedAssets(data.modules);
+        var outputData = null;
 
-        var format = new Format(data, parsedAssets);
-        var outputData = format[self.options.format]();
+        if (typeof self.options.format === 'string' ||
+            self.options.format instanceof String) {
+            var format = new Format(data, parsedAssets);
+            outputData = format[self.options.format]();
+        }
+        else {
+            outputData = self.options.format(data, parsedAssets);
+        }
 
         fs.writeFileSync(output, JSON.stringify(outputData));
     });

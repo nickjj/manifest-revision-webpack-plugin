@@ -81,7 +81,7 @@ module.exports = {
 - `ignorePaths` is an array of paths to ignore.
 - `format` allows you to pick the manifest output file format.
   - Currently supports `general` (default) and `rails`.
-  - Want to create your own format? Submit a pull request.
+  - Want to create your own format? [Submit a pull request](https://github.com/nickjj/manifest-revision-webpack-plugin/blob/master/format.js).
 
 ## How would I use the manifest file?
 
@@ -108,8 +108,11 @@ helper called `asset_for`.
 ### What would the implementation of that look like?
 
 There's too many web frameworks to include examples. As people use the project
-it would be nice to create wiki pages that have end to end examples on how to
-implement it in popular web frameworks.
+it would be nice to [create wiki pages](https://github.com/nickjj/manifest-revision-webpack-plugin/wiki)
+that have end to end examples on how to implement it in popular web frameworks.
+
+- [Flask-Webpack](http://blog.nickjanetakis.com/post/120653461133/manage-your-assets-with-flask-webpack): A Flask extension to use this plugin's `manifest.json`
+  - Contains a blog post and demo video explaining how to set things up
 
 ## Contributors
 

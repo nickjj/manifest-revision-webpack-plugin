@@ -1,0 +1,12 @@
+Manifest Revision Webpack Plugin changelog
+==========================================
+
+Version 0.0.4
+-------------
+
+- Add format option and support for Ruby on Rails
+
+Version 0.0.1
+-------------
+
+- First release

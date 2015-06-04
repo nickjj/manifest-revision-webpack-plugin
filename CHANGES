@@ -1,6 +1,11 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.0.5
+-------------
+
+- Add ability to pass in a custom format function
+
 Version 0.0.4
 -------------
 

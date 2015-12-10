@@ -156,7 +156,11 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
             outputData = self.options.format(data, parsedAssets);
         }
 
-        fs.writeFileSync(output, JSON.stringify(outputData));
+        if (typeof outputData === 'object') {
+            outputData = JSON.stringify(outputData);
+        }
+
+        fs.writeFileSync(output, String(outputData));
     });
 };
 

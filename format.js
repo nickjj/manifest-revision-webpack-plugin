@@ -25,6 +25,9 @@ Format.prototype.normalizeChunks = function () {
             output[chunk] = chunkValue;
         }
         else {
+            chunkValue = chunkValue.filter(function(item) {
+                return item.indexOf('hot-update.js') === -1;
+            });
             output[chunk] = chunkValue.slice(-1)[0];
         }
     }

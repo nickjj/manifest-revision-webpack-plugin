@@ -13,6 +13,8 @@ function test_general() {
 
     assert.equal(data.assets['app_js.js'],
                  'app_js.5018c3226e10bf313701.js');
+    assert.equal(data.assets['hot_app_js.js'],
+                 'app_js.5018c3226e10bf313701.js');
     assert.equal(data.assets['app_css.css'],
                  'app_css.291431bdd7415f9ff51d.css');
     assert.equal(data.assets['images/spinner.gif'],

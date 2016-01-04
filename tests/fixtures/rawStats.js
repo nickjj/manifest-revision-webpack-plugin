@@ -5,6 +5,9 @@ var rawStats = {
     publicPath: 'http://localhost:2992/assets/',
     assetsByChunkName: {
         app_js: 'app_js.5018c3226e10bf313701.js',
+        hot_app_js: ['app_js.5018c3226e10bf313701.js',
+            '2.aa80015de0a5a07f7481.hot-update.js'
+        ],
         app_css: ['app_css.291431bdd7415f9ff51d.js',
             'app_css.291431bdd7415f9ff51d.css'
         ]

@@ -83,7 +83,7 @@ module.exports = {
 ## API
 
 - `rootAssetPath` defines where it should start looking for assets.
-- `ignorePaths` is an array of paths to ignore.
+- `ignorePaths` is an array of paths to ignore. Path could be a string or regexp.
 - `format` allows you to pick the manifest output file format.
   - Currently supports `general` (default), `rails` or passing in a function.
 

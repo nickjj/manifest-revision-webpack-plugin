@@ -1,6 +1,14 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.1.0
+-------------
+
+- ignorePaths now accepts either a directory or file path as a string or Regex
+- hot-update.js is now excluded from the the output of the manifest file
+- JSON.stringify is now only called when the formatter is an Object or Array
+- Add Travis-CI tests
+
 Version 0.0.5
 -------------
 

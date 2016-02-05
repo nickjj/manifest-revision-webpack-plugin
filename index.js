@@ -85,11 +85,12 @@ ManifestRevisionPlugin.prototype.isSafeToTrack = function (path) {
     var safeResults = [];
 
     for (var i = 0, length = this.options.ignorePaths.length; i < length; i++) {
-        if (path.indexOf(this.options.ignorePaths[i]) === -1) {
-            safeResults.push(true);
-        } else {
-            safeResults.push(false);
-        }
+        var ignorePath = this.options.ignorePaths[i];
+        var isSafePath =
+          ignorePath instanceof RegExp ?
+            !ignorePath.test(path) :
+            path.indexOf(ignorePath) === -1;
+        safeResults.push(isSafePath);
     }
 
     // Make sure we have no false entries because we need all trues for it to be

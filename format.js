@@ -22,13 +22,13 @@ Format.prototype.normalizeChunks = function () {
         var chunkValue = this.data.assetsByChunkName[chunk];
 
         if (typeof chunkValue === 'string') {
-            output[chunk] = chunkValue;
+            output[chunk] = [chunkValue];
         }
         else {
             chunkValue = chunkValue.filter(function(item) {
                 return item.indexOf('hot-update.js') === -1;
             });
-            output[chunk] = chunkValue.slice(-1)[0];
+            output[chunk] = chunkValue;
         }
     }
 
@@ -47,10 +47,13 @@ Format.prototype.mergeChunksIntoAssets = function () {
     output.assets = this.assets;
 
     for (var chunk in assetsByChunkName) {
-        var fileExtension = assetsByChunkName[chunk].split('.').slice(-1)[0];
-        var chunkWithExtension = chunk + '.' + fileExtension;
+        for (var asset in assetsByChunkName[chunk]) {
+            asset = assetsByChunkName[chunk][asset]
+            var fileExtension = asset.split('.').slice(-1)[0];
+            var chunkWithExtension = chunk + '.' + fileExtension;
 
-        output.assets[chunkWithExtension] = assetsByChunkName[chunk];
+            output.assets[chunkWithExtension] = asset;
+        }
     }
 
     return output;
@@ -74,7 +77,7 @@ Format.prototype.general = function () {
 Format.prototype.rails = function () {
     var output = this.general();
     output.files = {};
-    
+
     for (var asset in this.assets) {
         output.files[this.assets[asset]] = {
             'logical_path': asset

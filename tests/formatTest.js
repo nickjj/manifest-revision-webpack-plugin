@@ -15,6 +15,8 @@ function test_general() {
                  'app_js.5018c3226e10bf313701.js');
     assert.equal(data.assets['hot_app_js.js'],
                  'app_js.5018c3226e10bf313701.js');
+    assert.equal(data.assets['app_css.js'],
+                 'app_css.291431bdd7415f9ff51d.js');
     assert.equal(data.assets['app_css.css'],
                  'app_css.291431bdd7415f9ff51d.css');
     assert.equal(data.assets['images/spinner.gif'],
@@ -28,7 +30,7 @@ function test_rails() {
 
     assert(data.assets);
     assert(data.files);
-    
+
     assert.equal(data.files['images/spinner.37348967baeae34bfa408c1f16794db1.gif']['logical_path'],
                  'images/spinner.gif')
     assert.notEqual(data.files['images/spinner.37348967baeae34bfa408c1f16794db1.gif']['logical_path'],

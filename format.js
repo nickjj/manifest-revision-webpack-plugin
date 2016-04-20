@@ -41,14 +41,14 @@ Format.prototype.normalizeChunks = function () {
  * @returns {object}
  */
 Format.prototype.mergeChunksIntoAssets = function () {
-    var output = {}
+    var output = {};
     var assetsByChunkName = this.normalizeChunks();
 
     output.assets = this.assets;
 
     for (var chunk in assetsByChunkName) {
         for (var asset in assetsByChunkName[chunk]) {
-            asset = assetsByChunkName[chunk][asset]
+            asset = assetsByChunkName[chunk][asset];
             var fileExtension = asset.split('.').slice(-1)[0];
             var chunkWithExtension = chunk + '.' + fileExtension;
 
@@ -81,7 +81,7 @@ Format.prototype.rails = function () {
     for (var asset in this.assets) {
         output.files[this.assets[asset]] = {
             'logical_path': asset
-        }
+        };
     }
 
     return output;

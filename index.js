@@ -59,10 +59,10 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
         // Attempt to ignore chunked assets and other unimportant assets.
         if (item.name.indexOf('multi ') === -1 &&
             item.name.indexOf('~/') === -1 &&
-            item.reasons.length == 0 &&
+            item.reasons.length === 0 &&
             fs.lstatSync(item.name).isFile() &&
             item.hasOwnProperty('assets') &&
-            item.assets.length == 1) {
+            item.assets.length === 1) {
 
             var nameWithoutRoot = item.name.replace(this.options.rootAssetPath,
                                                     '');

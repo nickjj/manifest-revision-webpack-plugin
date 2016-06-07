@@ -60,7 +60,7 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
 
         if (this.options.extensionsRegex && item.name
             && (typeof item.name === 'string' || item.name instanceof String)
-            && (item.name.match(this.options.extensionsRegex)) {
+            && item.name.match(this.options.extensionsRegex)) {
 
             addCurrentItem = true;
         }

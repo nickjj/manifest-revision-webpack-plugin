@@ -20,6 +20,7 @@ var ManifestRevisionPlugin = function (output, options) {
     // Set sane defaults for any options.
     this.options.rootAssetPath = options.rootAssetPath || './';
     this.options.ignorePaths = options.ignorePaths || [];
+    this.options.extensionsRegex = options.extensionsRegex || null;
     this.options.format = options.format || 'general';
 };
 
@@ -55,6 +56,14 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
 
     for (var i = 0, length = data.length; i < length; i++) {
         var item = data[i];
+        var addCurrentItem = false;
+
+        if (this.options.extensionsRegex && item.name
+            && (typeof item.name === 'string' || item.name instanceof String)
+            && (item.name.match(this.options.extensionsRegex)) {
+
+            addCurrentItem = true;
+        }
 
         // Attempt to ignore chunked assets and other unimportant assets.
         if (item.name.indexOf('multi ') === -1 &&
@@ -64,8 +73,11 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
             item.hasOwnProperty('assets') &&
             item.assets.length === 1) {
 
-            var nameWithoutRoot = item.name.replace(this.options.rootAssetPath,
-                                                    '');
+            addCurrentItem = true;
+        }
+
+        if (addCurrentItem) {
+            var nameWithoutRoot = item.name.replace(this.options.rootAssetPath, '');
             var mappedAsset = this.mapAsset(nameWithoutRoot, item.assets[0]);
 
             assets[mappedAsset[0]] = mappedAsset[1];

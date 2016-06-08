@@ -84,6 +84,7 @@ module.exports = {
 
 - `rootAssetPath` defines where it should start looking for assets.
 - `ignorePaths` is an array of paths to ignore. Path could be a string or regexp.
+- `extensionsRegex` is a regexp for assets you always want to include. Example: `/\.(jpe?g|png|gif|svg)$/i`
 - `format` allows you to pick the manifest output file format.
   - Currently supports `general` (default), `rails` or passing in a function.
 

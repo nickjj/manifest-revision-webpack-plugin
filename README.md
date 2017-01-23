@@ -154,7 +154,7 @@ There's too many web frameworks to include examples. As people use the project
 it would be nice to [create wiki pages](https://github.com/nickjj/manifest-revision-webpack-plugin/wiki)
 that have end to end examples on how to implement it in popular web frameworks.
 
-- [Flask-Webpack](http://blog.nickjanetakis.com/post/120653461133/manage-your-assets-with-flask-webpack): A Flask extension to use this plugin's `manifest.json`
+- [Flask-Webpack](https://nickjanetakis.com/blog/manage-your-assets-with-flask-webpack): A Flask extension to use this plugin's `manifest.json`
   - Contains a blog post and demo video explaining how to set things up
 
 ## Contributors

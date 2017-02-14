@@ -1,7 +1,13 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.4.0
+-------------
+
+- Allow for webpack v2.2.0 in package.json
+
 Version 0.3.0
+-------------
 
 - Add extensionsRegex option to white list assets you always want included
 

@@ -57,6 +57,13 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
     for (var i = 0, length = data.length; i < length; i++) {
         var item = data[i];
         var addCurrentItem = false;
+        var isFile;
+
+        try {
+            isFile = fs.lstatSync(item.name).isFile();
+        } catch (e) {
+            isFile = false;
+        }
 
         if (this.options.extensionsRegex && item.name
             && (typeof item.name === 'string' || item.name instanceof String)
@@ -66,10 +73,9 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
         }
 
         // Attempt to ignore chunked assets and other unimportant assets.
-        if (item.name.indexOf('multi ') === -1 &&
+        if (isFile &&
             item.name.indexOf('~/') === -1 &&
             item.reasons.length === 0 &&
-            fs.lstatSync(item.name).isFile() &&
             item.hasOwnProperty('assets') &&
             item.assets.length === 1) {
 

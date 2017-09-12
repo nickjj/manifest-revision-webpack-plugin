@@ -83,7 +83,21 @@ ManifestRevisionPlugin.prototype.parsedAssets = function (data) {
         }
 
         if (addCurrentItem) {
-            var nameWithoutRoot = item.name.replace(this.options.rootAssetPath, '');
+
+            var itemName = item.name;
+            var rootPath = this.options.rootAssetPath;
+
+            if (path.isAbsolute(rootPath)) {
+                itemName = path.resolve(itemName);
+            }
+            // Convert win path to posix path.
+            if (path.sep === '\\') {
+                var winRegExp = new RegExp('\\' + path.sep, 'g');
+                itemName = itemName.replace(winRegExp, '/');
+                rootPath = rootPath.replace(winRegExp, '/');
+            }
+
+            var nameWithoutRoot = itemName.replace(rootPath, '');
             var mappedAsset = this.mapAsset(nameWithoutRoot, item.assets[0]);
 
             assets[mappedAsset[0]] = mappedAsset[1];
@@ -130,7 +144,7 @@ ManifestRevisionPlugin.prototype.walkAndPrefetchAssets = function (compiler) {
     var walker_options = {
         listeners: {
             file: function (root, fileStat, next) {
-                var assetPath = './' + path.join(root, fileStat.name);
+                var assetPath = path.resolve(root, fileStat.name);
                 if (self.isSafeToTrack(assetPath)) {
                     compiler.apply(new webpack.PrefetchPlugin(assetPath));
                 }

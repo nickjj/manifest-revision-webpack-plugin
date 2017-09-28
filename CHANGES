@@ -1,6 +1,12 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.4.1
+-------------
+
+- Add support for webpack 3.x
+- Add Windows support
+
 Version 0.4.0
 -------------
 
